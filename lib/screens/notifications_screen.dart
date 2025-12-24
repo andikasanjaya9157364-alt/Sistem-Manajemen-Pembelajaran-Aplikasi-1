@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learning_management_system/theme.dart';
+import 'notification_detail_screen.dart';
 
 class NotificationsScreen extends StatelessWidget {
   const NotificationsScreen({super.key});
@@ -73,6 +74,18 @@ class NotificationsScreen extends StatelessWidget {
               ),
               isThreeLine: true,
               contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              onTap: () {
+                // Prepare data for detail screen
+                final detailData = Map<String, dynamic>.from(notif);
+                detailData['icon'] = _getIconData(notif['type']);
+                
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => NotificationDetailScreen(notification: detailData),
+                  ),
+                );
+              },
             ),
           );
         },
@@ -80,34 +93,28 @@ class NotificationsScreen extends StatelessWidget {
     );
   }
 
+  IconData _getIconData(String type) {
+    switch (type) {
+      case 'assignment': return Icons.assignment_late;
+      case 'material': return Icons.book;
+      case 'system': return Icons.warning_amber_rounded;
+      case 'attendance': return Icons.access_time;
+      case 'grade': return Icons.grade;
+      default: return Icons.notifications;
+    }
+  }
+
   Widget _buildIcon(String type) {
-    IconData iconData;
+    IconData iconData = _getIconData(type);
     Color color;
 
     switch (type) {
-      case 'assignment':
-        iconData = Icons.assignment_late;
-        color = Colors.orange;
-        break;
-      case 'material':
-        iconData = Icons.book;
-        color = Colors.blue;
-        break;
-      case 'system':
-        iconData = Icons.warning_amber_rounded;
-        color = Colors.red;
-        break;
-      case 'attendance':
-        iconData = Icons.access_time;
-        color = Colors.green;
-        break;
-       case 'grade':
-        iconData = Icons.grade;
-        color = Colors.purple;
-        break;
-      default:
-        iconData = Icons.notifications;
-        color = Colors.grey;
+      case 'assignment': color = Colors.orange; break;
+      case 'material': color = Colors.blue; break;
+      case 'system': color = Colors.red; break;
+      case 'attendance': color = Colors.green; break;
+      case 'grade': color = Colors.purple; break;
+      default: color = Colors.grey;
     }
 
     return Container(
