@@ -30,30 +30,17 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Logo Container with white background to ensure visibility
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    blurRadius: 10,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
-              ),
-              child: Image.asset(
-                'assets/images/logo_celoe.png',
-                width: 150,
-                height: 150,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) {
-                  return const Icon(Icons.school, size: 80, color: CeLOETheme.primaryColor);
-                },
-              ),
+            // Logo without container for white logo on colored background
+            Image.asset(
+              'assets/images/logo_celoe_white.png',
+              width: 200,
+              height: 200,
+              fit: BoxFit.contain,
+              errorBuilder: (context, error, stackTrace) {
+                return const Icon(Icons.school, size: 80, color: Colors.white);
+              },
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 12),
             Text( // Text color fixed to white for contrast
                'University LMS',
                style: Theme.of(context).textTheme.headlineMedium?.copyWith(

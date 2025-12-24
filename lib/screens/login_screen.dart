@@ -15,9 +15,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isPasswordVisible = false;
 
   void _handleLogin() {
-    // Determine user role based on email - simple logic for demo
-    // If email contains "dosen", pass role as Teacher, otherwise Student
-    // This allows the user to see both dashboards by changing the email
     String role = 'Student';
     if (_emailController.text.toLowerCase().contains('dosen')) {
       role = 'Teacher';
@@ -31,169 +28,200 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            // Header Image with Curve
-            Stack(
-              children: [
-                Container(
-                  height: 300,
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              // Header Image with Custom Curve
+              ClipPath(
+                clipper: HeaderClipper(),
+                child: Container(
+                  height: 320,
                   width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: CeLOETheme.primaryColor,
-                  ),
-                  child: Image.asset(
-                    'assets/images/header_gku.png',
-                    fit: BoxFit.cover,
-                    alignment: Alignment.center,
-                    errorBuilder: (context, error, stackTrace) {
-                       return Container(color: CeLOETheme.primaryColor);
-                    },
-                  ),
-                ),
-                Container(
-                  height: 300,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Colors.transparent,
-                        CeLOETheme.primaryColor.withOpacity(0.8),
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    height: 30,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
+                  color: CeLOETheme.primaryColor, // Fallback color
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(24.0),
+                      child: Image.asset(
+                        'assets/images/logo_smk_assalam.png',
+                        fit: BoxFit.contain,
+                        alignment: Alignment.center,
                       ),
                     ),
                   ),
                 ),
-                Positioned(
-                  bottom: 40,
-                  left: 24,
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Welcome Back!',
-                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                          color: Colors.white,
+                      const SizedBox(height: 10),
+                      const Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 32,
                           fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
                       ),
-                      Text(
-                        'Sign in to define your future.',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Colors.white70,
+                      const SizedBox(height: 48),
+
+                      // Email Input
+                      const Text('Email 365', 
+                        style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 16)
+                      ),
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: const InputDecoration(
+                          hintText: '',
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: CeLOETheme.primaryColor, width: 2),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: CeLOETheme.primaryColor, width: 2),
+                          ),
+                          contentPadding: EdgeInsets.symmetric(vertical: 8),
+                          isDense: true,
+                          filled: false,
                         ),
                       ),
+                      const SizedBox(height: 32),
+
+                      // Password Input
+                      const Text('Password', 
+                         style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w600, fontSize: 16)
+                      ),
+                      TextFormField(
+                        controller: _passwordController,
+                        obscureText: !_isPasswordVisible,
+                        decoration: InputDecoration(
+                          enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: CeLOETheme.primaryColor, width: 2),
+                          ),
+                          focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: CeLOETheme.primaryColor, width: 2),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(vertical: 8),
+                          isDense: true,
+                          filled: false,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isPasswordVisible
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                                  color: Colors.black,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              });
+                            },
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 48),
+
+                      // Login Button
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: _handleLogin,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFFB71C1C), // Specific deep red
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(vertical: 16),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            elevation: 5,
+                          ),
+                          child: const Text('Log In', 
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)
+                          ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 24),
+                      Center(
+                        child: TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Bantuan ?',
+                            style: TextStyle(
+                              color: Color(0xFFB71C1C),
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ),
+                       const SizedBox(height: 100), // Space for bottom wave
                     ],
                   ),
-                )
-              ],
-            ),
-            
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                   const SizedBox(height: 20),
-                  // Email Input
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email 365',
-                      prefixIcon: const Icon(Icons.email_outlined),
-                      hintText: 'student@telkomuniversity.ac.id',
-                      filled: true,
-                      fillColor: Colors.grey[50],
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  
-                  // Password Input
-                  TextFormField(
-                    controller: _passwordController,
-                    obscureText: !_isPasswordVisible,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      prefixIcon: const Icon(Icons.lock_outline),
-                      filled: true,
-                      fillColor: Colors.grey[50],
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _isPasswordVisible
-                              ? Icons.visibility_outlined
-                              : Icons.visibility_off_outlined,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _isPasswordVisible = !_isPasswordVisible;
-                          });
-                        },
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  
-                  // Login Button
-                  ElevatedButton(
-                    onPressed: _handleLogin,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: CeLOETheme.primaryColor,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      elevation: 5,
-                      shadowColor: CeLOETheme.primaryColor.withOpacity(0.5),
-                    ),
-                    child: const Text('Log In'),
-                  ),
-                  
-                  const SizedBox(height: 24),
-                  
-                  // Help Center
-                  Center(
-                    child: TextButton.icon(
-                      onPressed: () {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                           const SnackBar(content: Text('Redirecting to Help Center...')),
-                        );
-                      },
-                      icon: const Icon(Icons.help_outline, size: 18),
-                      label: const Text('Butuh Bantuan?'),
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.grey[600],
-                      ),
-                    ),
-                  ),
-                  
-                  const SizedBox(height: 40),
-                  Center(
-                    child: Text(
-                      'v1.0.0 Powered by Telkom University',
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                  ),
-                ],
+                ),
+              ),
+            ],
+          ),
+          
+          // Bottom Wave
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: ClipPath(
+              clipper: FooterClipper(),
+              child: Container(
+                height: 150,
+                color: const Color(0xFFB71C1C).withOpacity(0.8), // Semi-transparent red
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
+}
+
+class HeaderClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.lineTo(0, size.height - 50);
+    // Create a gentle upward curve/slope
+    path.quadraticBezierTo(
+      size.width / 4, 
+      size.height, 
+      size.width, 
+      size.height - 80
+    );
+    path.lineTo(size.width, 0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+class FooterClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.moveTo(0, 50);
+    path.quadraticBezierTo(
+      size.width / 2, 
+      -50, // Control point above for the wave crest
+      size.width, 
+      60   // End point
+    );
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
