@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     // Header height
-    const double headerHeight = 280;
+    const double headerHeight = 240;
     const double logoSize = 100;
 
     return Scaffold(
@@ -52,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Image.asset(
                         'assets/images/header_gku.png',
                         fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
                       ),
                     ),
                   ),

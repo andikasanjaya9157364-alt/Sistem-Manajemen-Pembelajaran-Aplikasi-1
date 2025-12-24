@@ -9,29 +9,25 @@ class MyCoursesScreen extends StatelessWidget {
       'title': 'DESAIN ANTARMUKA & PENGALAMAN PENGGUNA (UI/UX)', 
       'code': 'D4SM-44-03 [GAB]',
       'progress': 0.85, 
-      'color': Colors.amber, 
-      'icon': 'UI\nUX'
+      'image': 'assets/images/book_ui_ux.png',
     },
     {
       'title': 'KEWARGANEGARAAN', 
       'code': 'D4SM-44-02 [GAB], JUMAT 2',
       'progress': 0.65, 
-      'color': Colors.redAccent, 
-      'icon': 'Pancasila'
+      'image': 'assets/images/book_civics.png',
     },
     {
       'title': 'SISTEM OPERASI', 
       'code': 'D4SM-44-07 [DDS]',
       'progress': 0.50, 
-      'color': Colors.blueGrey, 
-      'icon': 'System'
+      'image': 'assets/images/book_os.png',
     },
     {
       'title': 'PEMROGRAMAN PERANGKAT BERGERAK MULTIMEDIA', 
       'code': 'D4SM-44-03 [APJ]',
       'progress': 0.30, 
-      'color': Colors.cyan, 
-      'icon': 'Mobile'
+      'image': 'assets/images/book_mobile_dev.png',
     },
   ];
 
@@ -43,10 +39,7 @@ class MyCoursesScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black),
           onPressed: () {
-             // In a real app with navigation stack, this would look different.
-             // Since this is a tab, maybe it shouldn't have a back button, 
-             // but the design shows one. We'll leave it but maybe it switches tab?
-             // For now, let's just keep it visual.
+             // Navigation logic
           },
         ),
         title: const Text('Kelas Saya', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
@@ -64,23 +57,14 @@ class MyCoursesScreen extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // 1. Thumbnail (Placeholder)
-                Container(
-                  width: 80,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: course['color'],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  alignment: Alignment.center,
-                  child: Text(
-                    course['icon'],
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white, 
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12
-                    ),
+                // 1. Thumbnail Information
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.asset(
+                    course['image'],
+                    width: 70, // Slightly smaller to match book ratio usually
+                    height: 90,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -91,7 +75,7 @@ class MyCoursesScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '2024/2', // Hardcoded semester based on reference
+                        '2024/2', 
                         style: TextStyle(fontSize: 10, color: Colors.grey[600]),
                       ),
                       const SizedBox(height: 4),
