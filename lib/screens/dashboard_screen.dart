@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learning_management_system/theme.dart';
+import 'my_courses_screen.dart';
+import 'notifications_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   final String userRole;
@@ -13,7 +15,8 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndex = 0;
 
-  final List<Map<String, dynamic>> _courses = [
+  // Course data reused for the Home tab summary
+  final List<Map<String, dynamic>> _courses = const [
     {'title': 'Desain Tampilan & Pengalaman Pengguna (UI/UX)', 'progress': 0.75},
     {'title': 'Kewarganegaraan', 'progress': 1.0},
     {'title': 'Sistem Operasi', 'progress': 0.45},
@@ -23,6 +26,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
     {'title': 'Olah Raga', 'progress': 0.90},
   ];
 
+  /* 
+     We will define the pages here. 
+     Note that we are creating a method for the Home content to keep the build method clean,
+     and reusing the new MyCoursesScreen for index 1.
+  */
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -31,9 +40,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // List of widgets for proper state switching
+    // Index 0: Home (Custom method below)
+    // Index 1: MyCoursesScreen
+    // Index 2: Notifications Placeholder
+    final List<Widget> pages = [
+      _buildHomeContent(),
+      const MyCoursesScreen(),
+      const NotificationsScreen(),
+    ];
+
     return Scaffold(
       backgroundColor: Colors.grey[50],
-      appBar: AppBar(
+      // We only show the custom AppBar if we are on the Home screen (Index 0).
+      // MyCoursesScreen has its own AppBar.
+      appBar: _selectedIndex == 0 ? AppBar(
         backgroundColor: CeLOETheme.primaryColor,
         elevation: 0,
         title: Row(
@@ -64,8 +85,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
             onPressed: () {},
           ),
         ],
+      ) : null, // Null AppBar for other tabs to let them define their own
+      
+      body: pages[_selectedIndex],
+      
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Beranda',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book), 
+            label: 'Kelas Saya',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Notifikasi',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: CeLOETheme.primaryColor,
+        unselectedItemColor: Colors.grey,
+        onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        elevation: 10,
       ),
-      body: SingleChildScrollView(
+    );
+  }
+
+  // Extracted Home Content
+  Widget _buildHomeContent() {
+    return SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -186,7 +238,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               const SizedBox(height: 24),
               
-              // Course Progress List
+              // Course Progress List (Preview on Home)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -198,7 +250,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                   ),
                   TextButton(
-                    onPressed: (){}, 
+                    onPressed: (){
+                      // Switch to "Kelas Saya" tab
+                      setState(() {
+                         _selectedIndex = 1;
+                      });
+                    }, 
                     child: const Text('Lihat Semua', 
                       style: TextStyle(color: CeLOETheme.primaryColor)
                     )
@@ -206,10 +263,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ],
               ),
               
+              // We show a limited list on the home screen (first 3)
               ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                itemCount: _courses.length,
+                itemCount: 3, // Only show top 3
                 itemBuilder: (context, index) {
                   final course = _courses[index];
                   return Container(
@@ -271,30 +329,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Beranda',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.class_), // 'class' is a keyword, so use 'class_' or Icons.book
-            label: 'Kelas Saya',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'Notifikasi',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: CeLOETheme.primaryColor,
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        elevation: 10,
-      ),
-    );
+      );
   }
 }
