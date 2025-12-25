@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learning_management_system/theme.dart';
+
 import 'package:learning_management_system/screens/course_detail_screen.dart';
 
 class MyCoursesScreen extends StatelessWidget {

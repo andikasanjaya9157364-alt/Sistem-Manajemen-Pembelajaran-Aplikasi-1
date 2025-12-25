@@ -14,7 +14,7 @@ class CeLOETheme {
         seedColor: primaryColor,
         primary: primaryColor,
         secondary: accentColor,
-        background: scaffoldBackgroundColor,
+        surface: scaffoldBackgroundColor,
       ),
       scaffoldBackgroundColor: scaffoldBackgroundColor,
       textTheme: GoogleFonts.interTextTheme(),

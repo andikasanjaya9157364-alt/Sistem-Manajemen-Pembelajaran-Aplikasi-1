@@ -20,15 +20,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int _selectedIndex = 0;
 
   // Course data reused for the Home tab summary
-  final List<Map<String, dynamic>> _courses = const [
-    {'title': 'Desain Tampilan & Pengalaman Pengguna (UI/UX)', 'progress': 0.75},
-    {'title': 'Kewarganegaraan', 'progress': 1.0},
-    {'title': 'Sistem Operasi', 'progress': 0.45},
-    {'title': 'Pemrograman Perangkat Bergerak Multimedia', 'progress': 0.30},
-    {'title': 'Bahasa Inggris: Bisnis dan Ilmiah', 'progress': 0.60},
-    {'title': 'Pemrograman Multimedia Interaktif', 'progress': 0.10},
-    {'title': 'Olah Raga', 'progress': 0.90},
-  ];
+
 
   /* 
      We will define the pages here. 
@@ -173,7 +165,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.white.withValues(alpha: 0.1),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),

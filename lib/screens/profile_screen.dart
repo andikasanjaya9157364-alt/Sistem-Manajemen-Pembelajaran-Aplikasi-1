@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:learning_management_system/theme.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+
 
 class ProfileScreen extends StatefulWidget {
   final XFile? currentImage;
@@ -187,7 +187,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 10,
                         offset: const Offset(0, 5),
                       ),

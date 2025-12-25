@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learning_management_system/theme.dart';
+
 
 class SessionDetailScreen extends StatefulWidget {
   final String title;
@@ -120,7 +120,7 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
             border: Border.all(color: Colors.grey[200]!),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.03),
+                color: Colors.black.withValues(alpha: 0.03),
                 blurRadius: 2,
                 offset: const Offset(0, 2),
               ),
