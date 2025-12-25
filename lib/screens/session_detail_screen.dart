@@ -2,7 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:learning_management_system/theme.dart';
 
 class SessionDetailScreen extends StatefulWidget {
-  const SessionDetailScreen({super.key});
+  final String title;
+  final String description;
+  final List<Map<String, dynamic>> attachments;
+
+  const SessionDetailScreen({
+    super.key,
+    required this.title,
+    required this.description,
+    required this.attachments,
+  });
 
   @override
   State<SessionDetailScreen> createState() => _SessionDetailScreenState();
@@ -32,9 +41,9 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
             icon: const Icon(Icons.arrow_back, color: Colors.black),
             onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          'Konsep User Interface Design',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+        title: Text(
+          widget.title,
+          style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -47,15 +56,15 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   'Deskripsi',
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
-                  'Konsep dasar User Interface Design akan dipelajari bagaimana membangun sebuah Interaction Design pada antarmuka. Interaction ini sangat penting untuk aplikasi berkomunikasi dengan pengguna, lalu dipelajari juga poin-poin penting pada interaction design seperti visibility, feedback, limitation, consistency dan affordance. Dan terakhir materi conceptual dan perceptual design interaction akan memberikan gambaran bagaimana bentuk dari interaction.',
-                  style: TextStyle(fontSize: 12, color: Colors.black87, height: 1.5),
+                  widget.description,
+                  style: const TextStyle(fontSize: 12, color: Colors.black87, height: 1.5),
                   textAlign: TextAlign.justify,
                 ),
               ],
@@ -97,18 +106,11 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
   }
 
   Widget _buildLampiranList() {
-    final List<Map<String, dynamic>> items = [
-      {'icon': Icons.link, 'title': 'Zoom Meeting Synchronous'},
-      {'icon': Icons.article_outlined, 'title': 'Halaman-halaman Antarmuka Pengguna'},
-      {'icon': Icons.article_outlined, 'title': 'UI Guidelines and Principles'},
-      {'icon': Icons.article_outlined, 'title': 'User Profile'},
-      {'icon': Icons.attach_file, 'title': 'Principles of User Interface Design.pdf'},
-    ];
-
     return ListView.builder(
       padding: const EdgeInsets.all(16),
-      itemCount: items.length,
+      itemCount: widget.attachments.length,
       itemBuilder: (context, index) {
+        final item = widget.attachments[index];
         return Container(
           margin: const EdgeInsets.only(bottom: 12),
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -126,11 +128,11 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
           ),
           child: Row(
             children: [
-              Icon(items[index]['icon'], size: 20, color: Colors.grey[600]),
+              Icon(item['icon'], size: 20, color: Colors.grey[600]),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  items[index]['title'],
+                  item['title'],
                   style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                 ),
               ),

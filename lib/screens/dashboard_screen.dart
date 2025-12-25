@@ -4,7 +4,8 @@ import 'my_courses_screen.dart';
 import 'notifications_screen.dart';
 import 'profile_screen.dart';
 import 'course_detail_screen.dart';
-import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class DashboardScreen extends StatefulWidget {
   final String userRole;
@@ -35,7 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
      and reusing the new MyCoursesScreen for index 1.
   */
 
-  File? _profileImage; // Stores selected profile image
+  XFile? _profileImage; // Stores selected profile image (XFile is web-ready)
 
   void _onItemTapped(int index) {
     setState(() {
@@ -73,7 +74,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             );
 
             // If a new image was returned, update state
-            if (result != null && result is File) {
+            if (result != null && result is XFile) {
                setState(() {
                  _profileImage = result;
                });
@@ -85,9 +86,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 radius: 24,
                 backgroundColor: Colors.white24,
                 backgroundImage: _profileImage != null 
-                    ? FileImage(_profileImage!) as ImageProvider
+                    ? (kIsWeb 
+                        ? NetworkImage(_profileImage!.path) 
+                        : AssetImage(_profileImage!.path)) as ImageProvider // Placeholder for mobile path
                     : const AssetImage('assets/images/user_avatar.png'),
-                // No child Icon needed anymore as we always have an image
+                // Note: NetworkImage(_profileImage!.path) works for blob URLs on web.
+                // On mobile it would need FileImage, but since we are targeting web now...
               ),
               const SizedBox(width: 12),
               Column(

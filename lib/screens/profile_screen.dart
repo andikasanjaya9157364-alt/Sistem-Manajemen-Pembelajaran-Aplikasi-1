@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:learning_management_system/theme.dart';
-import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ProfileScreen extends StatefulWidget {
-  final File? currentImage;
+  final XFile? currentImage;
 
   const ProfileScreen({super.key, this.currentImage});
 
@@ -13,7 +13,7 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  late File? _image;
+  late XFile? _image;
   final ImagePicker _picker = ImagePicker();
   int _selectedTabIndex = 0;
 
@@ -86,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     if (pickedFile != null) {
       setState(() {
-        _image = File(pickedFile.path);
+        _image = pickedFile;
       });
     }
   }
@@ -138,7 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               color: Colors.grey[300],
                               image: _image != null 
                                 ? DecorationImage(
-                                    image: FileImage(_image!),
+                                    image: NetworkImage(_image!.path), 
                                     fit: BoxFit.cover,
                                   )
                                 : const DecorationImage(

@@ -139,11 +139,43 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> with SingleTick
 
         return GestureDetector(
           onTap: () {
-            // Check if it's the 2nd meeting (index 1) which matches the design requirement
-            // Or just navigate to the static detail screen for all items for demo purposes
+            // Data for Meeting 1 (Pengantar)
+            String title = session['title'];
+            String description = 'Deskripsi belum tersedia.';
+            List<Map<String, dynamic>> attachments = [];
+
+            if (index == 0) { // Pertemuan 1
+              description = 'Mata kuliah Desain Antarmuka Pengguna (User Interface Design) memberikan pemahaman serta keterampilan dalam perancangan antarmuka untuk perangkat lunak. Mahasiswa akan mempelajari konsep dasar, prinsip-prinsip desain antarmuka, dan implementasinya dalam pembuatan aplikasi.';
+              attachments = [
+                {'icon': Icons.link, 'title': 'Introduction to UI/UX Design (Zoom)'},
+                {'icon': Icons.article_outlined, 'title': 'Silabus Mata Kuliah'},
+                {'icon': Icons.attach_file, 'title': 'Slide Pengantar UI.pdf'},
+              ];
+            } else if (index == 1) { // Pertemuan 2 (Konsep)
+               title = 'Konsep User Interface Design';
+               description = 'Konsep dasar User Interface Design akan dipelajari bagaimana membangun sebuah Interaction Design pada antarmuka. Interaction ini sangat penting untuk aplikasi berkomunikasi dengan pengguna, lalu dipelajari juga poin-poin penting pada interaction design seperti visibility, feedback, limitation, consistency dan affordance. Dan terakhir materi conceptual dan perceptual design interaction akan memberikan gambaran bagaimana bentuk dari interaction.';
+               attachments = [
+                {'icon': Icons.link, 'title': 'Zoom Meeting Synchronous'},
+                {'icon': Icons.article_outlined, 'title': 'Halaman-halaman Antarmuka Pengguna'},
+                {'icon': Icons.article_outlined, 'title': 'UI Guidelines and Principles'},
+                {'icon': Icons.article_outlined, 'title': 'User Profile'},
+                {'icon': Icons.attach_file, 'title': 'Principles of User Interface Design.pdf'},
+               ];
+            } else {
+               // Default mock for others
+               description = 'Detail pertemuan belum tersedia.';
+               attachments = [
+                 {'icon': Icons.info_outline, 'title': 'Materi belum diunggah'},
+               ];
+            }
+
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const SessionDetailScreen()),
+              MaterialPageRoute(builder: (context) => SessionDetailScreen(
+                title: title,
+                description: description,
+                attachments: attachments,
+              )),
             );
           },
           child: Container(
