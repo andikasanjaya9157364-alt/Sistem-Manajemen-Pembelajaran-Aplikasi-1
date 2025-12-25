@@ -3,6 +3,7 @@ import 'package:learning_management_system/theme.dart';
 import 'my_courses_screen.dart';
 import 'notifications_screen.dart';
 import 'profile_screen.dart';
+import 'dart:io';
 
 class DashboardScreen extends StatefulWidget {
   final String userRole;
@@ -33,6 +34,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
      and reusing the new MyCoursesScreen for index 1.
   */
 
+  File? _profileImage; // Stores selected profile image
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -59,17 +62,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
         backgroundColor: CeLOETheme.primaryColor,
         elevation: 0,
         title: GestureDetector(
-          onTap: () {
-            Navigator.push(
+          onTap: () async {
+            // Navigate to Profile and wait for result (new image)
+            final result = await Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ProfileScreen()),
+              MaterialPageRoute(
+                builder: (context) => ProfileScreen(currentImage: _profileImage),
+              ),
             );
+
+            // If a new image was returned, update state
+            if (result != null && result is File) {
+               setState(() {
+                 _profileImage = result;
+               });
+            }
           },
           child: Row(
             children: [
-              const CircleAvatar(
+              CircleAvatar(
                 backgroundColor: Colors.white24,
-                child: Icon(Icons.person, color: Colors.white),
+                backgroundImage: _profileImage != null 
+                    ? FileImage(_profileImage!) as ImageProvider
+                    : const AssetImage('assets/images/user_avatar.png'),
+                // No child Icon needed anymore as we always have an image
               ),
               const SizedBox(width: 12),
               Column(
