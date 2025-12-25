@@ -143,6 +143,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> with SingleTick
             String title = session['title'];
             String description = 'Deskripsi belum tersedia.';
             List<Map<String, dynamic>> attachments = [];
+            List<Map<String, dynamic>> assignments = [];
 
             if (index == 0) { // Pertemuan 1
               description = 'Mata kuliah Desain Antarmuka Pengguna (User Interface Design) memberikan pemahaman serta keterampilan dalam perancangan antarmuka untuk perangkat lunak. Mahasiswa akan mempelajari konsep dasar, prinsip-prinsip desain antarmuka, dan implementasinya dalam pembuatan aplikasi.';
@@ -156,10 +157,24 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> with SingleTick
                description = 'Konsep dasar User Interface Design akan dipelajari bagaimana membangun sebuah Interaction Design pada antarmuka. Interaction ini sangat penting untuk aplikasi berkomunikasi dengan pengguna, lalu dipelajari juga poin-poin penting pada interaction design seperti visibility, feedback, limitation, consistency dan affordance. Dan terakhir materi conceptual dan perceptual design interaction akan memberikan gambaran bagaimana bentuk dari interaction.';
                attachments = [
                 {'icon': Icons.link, 'title': 'Zoom Meeting Synchronous'},
-                {'icon': Icons.article_outlined, 'title': 'Halaman-halaman Antarmuka Pengguna'},
-                {'icon': Icons.article_outlined, 'title': 'UI Guidelines and Principles'},
+                {'icon': Icons.article_outlined, 'title': 'Elemen-elemen Antarmuka Pengguna'},
+                {'icon': Icons.article_outlined, 'title': 'UID Guidelines and Principles'},
                 {'icon': Icons.article_outlined, 'title': 'User Profile'},
-                {'icon': Icons.attach_file, 'title': 'Principles of User Interface Design.pdf'},
+                {'icon': Icons.link, 'title': 'Principles of User Interface DesignURL'},
+               ];
+               assignments = [
+                 {
+                   'icon': Icons.textsms_outlined,
+                   'title': 'Quiz Review 01',
+                   'description': 'Silahkan kerjakan kuis ini dalam waktu 15 menit sebagai nilai pertama komponen kuis. Jangan lupa klik tombol Submit Answer setelah menjawab seluruh pertanyaan.\nKerjakan sebelum hari Jum\'at, 26 Februari 2021 jam 23:59 WIB.',
+                   'completed': true,
+                 },
+                 {
+                   'icon': Icons.description_outlined,
+                   'title': 'Tugas 01 - UID Android Mobile Game',
+                   'description': '1. Buatlah desain tampilan (antarmuka) pada aplikasi mobile game FPS (First Person Shooter) yang akan menjadi tugas pada mata kuliah Pemrograman Aplikasi Permainan.\n2. Desain yang dibuat harus melingkupi seluruh tampilan pada aplikasi/game, dari pertama kali aplikasi dijalankan.',
+                   'completed': false, // Grey check in image
+                 }
                ];
             } else {
                // Default mock for others
@@ -175,6 +190,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> with SingleTick
                 title: title,
                 description: description,
                 attachments: attachments,
+                assignments: assignments,
               )),
             );
           },

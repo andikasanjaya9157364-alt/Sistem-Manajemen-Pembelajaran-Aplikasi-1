@@ -11,7 +11,10 @@ class SessionDetailScreen extends StatefulWidget {
     required this.title,
     required this.description,
     required this.attachments,
+    this.assignments = const [],
   });
+
+  final List<Map<String, dynamic>> assignments;
 
   @override
   State<SessionDetailScreen> createState() => _SessionDetailScreenState();
@@ -96,7 +99,8 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
               controller: _tabController,
               children: [
                 _buildLampiranList(),
-                const Center(child: Text("Belum ada tugas")),
+                _buildLampiranList(),
+                _buildTugasList(),
               ],
             ),
           ),
@@ -137,6 +141,80 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
                 ),
               ),
               const Icon(Icons.check_circle, color: Colors.green, size: 20),
+            ],
+          ),
+        );
+      },
+    );
+  }
+  Widget _buildTugasList() {
+    if (widget.assignments.isEmpty) {
+      return const Center(child: Text("Belum ada tugas"));
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: widget.assignments.length,
+      itemBuilder: (context, index) {
+        final item = widget.assignments[index];
+        bool isCompleted = item['completed'] ?? false;
+        
+        return Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey[200]!),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(color: Colors.grey[300]!),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Icon(
+                       item['icon'] ?? Icons.assignment_outlined,
+                       size: 24,
+                       color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      item['title'],
+                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    ),
+                  ),
+                  Icon(
+                    Icons.check_circle,
+                    color: isCompleted ? Colors.green : Colors.grey[300],
+                    size: 24,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              const Divider(height: 1),
+              const SizedBox(height: 12),
+              Text(
+                item['description'] ?? '',
+                style: const TextStyle(fontSize: 12, color: Colors.black87, height: 1.5),
+                textAlign: TextAlign.justify,
+              ),
             ],
           ),
         );
