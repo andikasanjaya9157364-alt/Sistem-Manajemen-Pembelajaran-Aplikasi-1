@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:learning_management_system/theme.dart';
 import 'my_courses_screen.dart';
 import 'notifications_screen.dart';
+import 'profile_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   final String userRole;
@@ -57,27 +58,35 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: _selectedIndex == 0 ? AppBar(
         backgroundColor: CeLOETheme.primaryColor,
         elevation: 0,
-        title: Row(
-          children: [
-            const CircleAvatar(
-              backgroundColor: Colors.white24,
-              child: Icon(Icons.person, color: Colors.white),
-            ),
-            const SizedBox(width: 12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'Dandy Candra Pratama', 
-                  style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  'Mahasiswa', 
-                  style: TextStyle(color: Colors.white70, fontSize: 13),
-                ),
-              ],
-            ),
-          ],
+        title: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfileScreen()),
+            );
+          },
+          child: Row(
+            children: [
+              const CircleAvatar(
+                backgroundColor: Colors.white24,
+                child: Icon(Icons.person, color: Colors.white),
+              ),
+              const SizedBox(width: 12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Text(
+                    'Dandy Candra Pratama', 
+                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'Mahasiswa', 
+                    style: TextStyle(color: Colors.white70, fontSize: 13),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
         actions: [
           IconButton(
