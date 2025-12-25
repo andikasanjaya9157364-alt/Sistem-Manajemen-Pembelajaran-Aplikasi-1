@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learning_management_system/theme.dart';
+import 'package:learning_management_system/screens/course_detail_screen.dart';
 
 class MyCoursesScreen extends StatelessWidget {
   const MyCoursesScreen({super.key});
@@ -52,75 +53,88 @@ class MyCoursesScreen extends StatelessWidget {
         itemCount: _courses.length,
         itemBuilder: (context, index) {
           final course = _courses[index];
-          return Container(
-            margin: const EdgeInsets.only(bottom: 24),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // 1. Thumbnail Information
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.asset(
-                    course['image'],
-                    width: 70, // Slightly smaller to match book ratio usually
-                    height: 90,
-                    fit: BoxFit.cover,
+          return GestureDetector(
+            onTap: () {
+               Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CourseDetailScreen(
+                    title: course['title'],
+                    code: course['code'],
                   ),
                 ),
-                const SizedBox(width: 16),
-                
-                // 2. Details
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '2024/2', 
-                        style: TextStyle(fontSize: 10, color: Colors.grey[600]),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        course['title'],
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          color: Colors.black87,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Text(
-                        course['code'],
-                        style: TextStyle(
-                          fontSize: 11,
-                          color: Colors.grey[600],
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      
-                      // Progress Bar
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(4),
-                        child: LinearProgressIndicator(
-                          value: course['progress'],
-                          backgroundColor: Colors.grey[300],
-                          valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFB71C1C)), // Deep Red
-                          minHeight: 8,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        '${(course['progress'] * 100).toInt()}% Selesai',
-                        style: const TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54,
-                        ),
-                      ),
-                    ],
+              );
+            },
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 24),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // 1. Thumbnail Information
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      course['image'],
+                      width: 70, // Slightly smaller to match book ratio usually
+                      height: 90,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-              ],
+                  const SizedBox(width: 16),
+                  
+                  // 2. Details
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '2024/2', 
+                          style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          course['title'],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                            color: Colors.black87,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          course['code'],
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey[600],
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        
+                        // Progress Bar
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: LinearProgressIndicator(
+                            value: course['progress'],
+                            backgroundColor: Colors.grey[300],
+                            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFB71C1C)), // Deep Red
+                            minHeight: 8,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          '${(course['progress'] * 100).toInt()}% Selesai',
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },

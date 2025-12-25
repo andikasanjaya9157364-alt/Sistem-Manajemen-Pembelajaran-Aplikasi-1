@@ -3,6 +3,7 @@ import 'package:learning_management_system/theme.dart';
 import 'my_courses_screen.dart';
 import 'notifications_screen.dart';
 import 'profile_screen.dart';
+import 'course_detail_screen.dart';
 import 'dart:io';
 
 class DashboardScreen extends StatefulWidget {
@@ -81,6 +82,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Row(
             children: [
               CircleAvatar(
+                radius: 24,
                 backgroundColor: Colors.white24,
                 backgroundImage: _profileImage != null 
                     ? FileImage(_profileImage!) as ImageProvider
@@ -107,7 +109,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications_outlined, color: Colors.white),
-            onPressed: () {},
+            onPressed: () {
+               Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const NotificationsScreen()),
+              );
+            },
           ),
         ],
       ) : null, // Null AppBar for other tabs to let them define their own
@@ -149,67 +156,60 @@ class _DashboardScreenState extends State<DashboardScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Upcoming Assignments Card
-              Text(
+              const Text(
                 'Tugas Yang Akan Datang',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black87),
               ),
               const SizedBox(height: 12),
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFB71C1C), Color(0xFFD32F2F)],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                  borderRadius: BorderRadius.circular(16),
+                  color: const Color(0xFFB71C1C), // Deep Red
+                  borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFFB71C1C).withOpacity(0.3),
-                      blurRadius: 8,
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
                   ],
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Text(
-                            'Deadline: 2 Hari lagi',
-                            style: TextStyle(color: Colors.white, fontSize: 12),
-                          ),
-                        ),
-                        const Icon(Icons.assignment, color: Colors.white70),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    const Text(
-                      'Tugas 01 - UID Android Mobile Game',
+                  children: const [
+                    Text(
+                      'DESAIN ANTARMUKA & PENGALAMAN PENGGUNA',
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 8),
-                    const Text(
-                      'Mata Kuliah: Pemrograman Perangkat Bergerak Multimedia',
+                    SizedBox(height: 12),
+                    Text(
+                      'Tugas 11 - UID Android Mobile Game',
                       style: TextStyle(
-                        color: Colors.white70,
-                        fontSize: 13,
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    Text(
+                      'Waktu Pengumpulan',
+                      style: TextStyle(
+                         color: Colors.white70,
+                         fontSize: 10,
+                      ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      'Jumat, 14 Februari, 12:00 AM',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
@@ -219,141 +219,190 @@ class _DashboardScreenState extends State<DashboardScreen> {
               const SizedBox(height: 24),
               
               // Announcements Banner
-               Text(
-                'Pengumuman Terbaru',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-              ),
-              const SizedBox(height: 12),
+               Row(
+                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 children: [
+                   const Text(
+                    'Pengumuman Terakhir',
+                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black87),
+                  ),
+                   TextButton(
+                    onPressed: (){}, 
+                    child: const Text('selengkapnya', 
+                      style: TextStyle(color: Colors.blue, fontSize: 12)
+                    )
+                  ),
+                 ],
+               ),
               Container(
-                padding: const EdgeInsets.all(16),
+                height: 120,
+                width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.amber[50],
+                  color: Colors.blue[50],
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.amber.shade200),
                 ),
-                child: Row(
-                  children: [
-                    Icon(Icons.warning_amber_rounded, color: Colors.amber[800], size: 32),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Info Maintenance Server',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.amber[900],
-                            ),
-                          ),
-                          const SizedBox(height: 4),
-                          Text(
-                            'Sistem akan maintenance pada tgl 25 Des jam 00:00 - 04:00.',
-                            style: TextStyle(color: Colors.amber[900], fontSize: 12),
-                          ),
-                        ],
-                      ),
+                child: Container(
+                  decoration: BoxDecoration(
+                     color: Colors.blue[50],
+                     borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(Icons.construction, size: 40, color: Colors.orange),
+                        SizedBox(height: 8),
+                         Text('CeLoe - ICT', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                         Text('Maintenance LMS', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
 
               const SizedBox(height: 24),
               
-              // Course Progress List (Preview on Home)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // Course Progress List
+              const Text(
+                'Progres Kelas',
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black87),
+              ),
+              const SizedBox(height: 12),
+              
+              // List Mock Data
+              ListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                children: [
+                   _buildCourseProgressItem('ui_ux', 'DESAIN ANTARMUKA & PENGALAMAN PENGGUNA (D4SM-41-GAB1)', 0.7),
+                   _buildCourseProgressItem('pancasila', 'KEWARGANEGARAAN (D4SM-41-GAB1 [BBR]) - JUMAT 2', 0.5),
+                   _buildCourseProgressItem('system', 'SISTEM OPERASI (D4SM-44-01 [CY])', 0.9),
+                   _buildCourseProgressItem('blue_poly', 'PEMROGRAMAN PERANGKAT BERGERAK MULTIMEDIA (D4SM-41-GAB1)', 0.85),
+                   _buildCourseProgressItem('gray_poly', 'BAHASA INGGRIS: BUSINESS AND SCIENTIFIC (D4SM-41-GAB1)', 0.75),
+                   _buildCourseProgressItem('blue_pattern', 'PEMROGRAMAN MULTIMEDIA INTERAKTIF (D4SM-41-04 [TPI])', 0.6),
+                   _buildCourseProgressItem('purple_poly', 'OLAH RAGA (DTT-44-01 [CY])', 0.8),
+                ],
+              ),
+              const SizedBox(height: 30),
+            ],
+          ),
+        )
+    );
+  }
+
+  Widget _buildCourseProgressItem(String styleType, String title, double progress) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CourseDetailScreen(
+              title: title,
+              code: 'D4SM-44-01-GAB', // Mock code for dashboard items
+            ),
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 16.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildStyledIcon(styleType),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Progres Kelas',
-                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                    '2020',
+                    style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+                  ),
+                  Text(
+                    title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
                     ),
                   ),
-                  TextButton(
-                    onPressed: (){
-                      // Switch to "Kelas Saya" tab
-                      setState(() {
-                         _selectedIndex = 1;
-                      });
-                    }, 
-                    child: const Text('Lihat Semua', 
-                      style: TextStyle(color: CeLOETheme.primaryColor)
-                    )
-                  ),
-                ],
-              ),
-              
-              // We show a limited list on the home screen (first 3)
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 3, // Only show top 3
-                itemBuilder: (context, index) {
-                  final course = _courses[index];
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 16),
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.04),
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          course['title'],
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
-                            color: Colors.black87,
+                  const SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(4),
+                          child: LinearProgressIndicator(
+                            value: progress,
+                            minHeight: 6,
+                            backgroundColor: Colors.grey[200],
+                            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFB71C1C)),
                           ),
                         ),
-                        const SizedBox(height: 12),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(4),
-                                child: LinearProgressIndicator(
-                                  value: course['progress'],
-                                  backgroundColor: Colors.grey[200],
-                                  valueColor: const AlwaysStoppedAnimation<Color>(CeLOETheme.primaryColor),
-                                  minHeight: 6,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Text(
-                              '${(course['progress'] * 100).toInt()}%',
-                              style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        '${(progress * 13).toInt()} / 13 Bahan', 
+                        style: const TextStyle(fontSize: 10, color: Colors.black54),
+                      ),
+                    ],
+                  )
+                ],
               ),
-              const SizedBox(height: 20),
-            ],
-          ),
+            )
+          ],
         ),
-      );
+      ),
+    );
   }
+
+  Widget _buildStyledIcon(String type) {
+    BoxDecoration decoration;
+    Widget? child;
+
+    switch (type) {
+      case 'ui_ux':
+        decoration = const BoxDecoration(color: Color(0xFFFFD54F)); 
+        child = ClipRRect(
+          borderRadius: BorderRadius.circular(8),
+          child: Image.asset('assets/images/course_uiux.png', fit: BoxFit.cover),
+        );
+        break;
+      case 'pancasila':
+        decoration = const BoxDecoration(color: Color(0xFFD32F2F)); // Red
+        child = const Center(child: Icon(Icons.security, color: Colors.amber, size: 30)); // Garuda placeholder
+        break;
+      case 'system':
+        decoration = BoxDecoration(color: Colors.grey[200]);
+        child = const Center(child: Text('System', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)));
+        break;
+      case 'blue_poly':
+        decoration = const BoxDecoration(
+          gradient: LinearGradient(colors: [Color(0xFF4FC3F7), Color(0xFF0288D1)], begin: Alignment.topLeft, end: Alignment.bottomRight)
+        );
+        break;
+      case 'gray_poly':
+        decoration = BoxDecoration(color: Colors.grey[300]);
+        break;
+      case 'blue_pattern':
+        decoration = const BoxDecoration(color: Color(0xFF1976D2));
+        child = const Icon(Icons.grid_view, color: Colors.white24, size: 40);
+        break;
+      case 'purple_poly':
+        decoration = const BoxDecoration(color: Color(0xFF7E57C2));
+        break;
+      default:
+        decoration = const BoxDecoration(color: Colors.grey);
+    }
+
+    return Container(
+      width: 60,
+      height: 60,
+      decoration: decoration.copyWith(borderRadius: BorderRadius.circular(8)),
+      child: child,
+    );
+  }
+
 }

@@ -130,11 +130,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Stack(
                         children: [
                           Container(
-                            width: 80,
-                            height: 80,
+                            width: 110,
+                            height: 110,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.white, width: 2),
+                              border: Border.all(color: Colors.white, width: 3),
                               color: Colors.grey[300],
                               image: _image != null 
                                 ? DecorationImage(
@@ -153,12 +153,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: InkWell(
                               onTap: _pickImage,
                               child: Container(
-                                padding: const EdgeInsets.all(4),
+                                padding: const EdgeInsets.all(6),
                                 decoration: const BoxDecoration(
                                   color: Colors.white,
                                   shape: BoxShape.circle,
                                 ),
-                                child: const Icon(Icons.camera_alt, size: 16, color: CeLOETheme.primaryColor),
+                                child: const Icon(Icons.camera_alt, size: 20, color: CeLOETheme.primaryColor),
                               ),
                             ),
                           ),
