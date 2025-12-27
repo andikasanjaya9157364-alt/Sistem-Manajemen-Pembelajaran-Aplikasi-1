@@ -3,6 +3,8 @@ import 'package:learning_management_system/theme.dart';
 import 'package:image_picker/image_picker.dart';
 
 
+import 'package:learning_management_system/screens/login_screen.dart';
+
 class ProfileScreen extends StatefulWidget {
   final XFile? currentImage;
 
@@ -279,6 +281,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
           _buildInfoRow('First access to site', 'Monday, 7 September 2020, 9:27 AM (288 days 12 hours)'),
           const Divider(height: 24),
           _buildInfoRow('Last access to site', 'Tuesday, 22 June 2021, 9:44 PM (now)'),
+          
+          const SizedBox(height: 32),
+          
+          Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                  (route) => false,
+                );
+              },
+              icon: const Icon(Icons.logout, color: Colors.white),
+              label: const Text('Log Out', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFB71C1C), // Deep Red
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              ),
+            ),
+          ),
         ],
       ),
     );

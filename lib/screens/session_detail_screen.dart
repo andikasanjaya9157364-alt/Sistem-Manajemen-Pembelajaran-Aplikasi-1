@@ -99,7 +99,6 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
               controller: _tabController,
               children: [
                 _buildLampiranList(),
-                _buildLampiranList(),
                 _buildTugasList(),
               ],
             ),
@@ -117,51 +116,7 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
         final item = widget.attachments[index];
         return Container(
           margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: Colors.grey[200]!),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.03),
-                blurRadius: 2,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Icon(item['icon'], size: 20, color: Colors.grey[600]),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  item['title'],
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
-                ),
-              ),
-              const Icon(Icons.check_circle, color: Colors.green, size: 20),
-            ],
-          ),
-        );
-      },
-    );
-  }
-  Widget _buildTugasList() {
-    if (widget.assignments.isEmpty) {
-      return const Center(child: Text("Belum ada tugas"));
-    }
-
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: widget.assignments.length,
-      itemBuilder: (context, index) {
-        final item = widget.assignments[index];
-        bool isCompleted = item['completed'] ?? false;
-        
-        return Container(
-          margin: const EdgeInsets.only(bottom: 16),
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),
@@ -174,47 +129,114 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
               ),
             ],
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(color: Colors.grey[300]!),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Icon(
-                       item['icon'] ?? Icons.assignment_outlined,
-                       size: 24,
-                       color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      item['title'],
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
-                    ),
-                  ),
-                  Icon(
-                    Icons.check_circle,
-                    color: isCompleted ? Colors.green : Colors.grey[300],
-                    size: 24,
-                  ),
-                ],
+              Icon(item['icon'], size: 24, color: Colors.grey[700]),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Text(
+                  item['title'],
+                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                ),
               ),
-              const SizedBox(height: 12),
-              const Divider(height: 1),
-              const SizedBox(height: 12),
-              Text(
-                item['description'] ?? '',
-                style: const TextStyle(fontSize: 12, color: Colors.black87, height: 1.5),
-                textAlign: TextAlign.justify,
+              const Icon(Icons.check_circle, color: Colors.green, size: 24),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildTugasList() {
+    if (widget.assignments.isEmpty) {
+      return const Center(child: Text("Belum ada tugas"));
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(16),
+      itemCount: widget.assignments.length,
+      itemBuilder: (context, index) {
+        final item = widget.assignments[index];
+        bool isCompleted = item['completed'] ?? false;
+        // Check if title or type indicates a Quiz
+        bool isQuiz = item['title'].toString().toLowerCase().contains('quiz') || 
+                      item['title'].toString().toLowerCase().contains('kuis');
+
+        return Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            // Blue border for Quiz, light grey for Assignment
+            border: Border.all(
+              color: isQuiz ? const Color(0xFF2196F3) : Colors.grey[300]!,
+              width: 1.5,
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
               ),
+            ],
+          ),
+          child: Column(
+            children: [
+              // Top Section: Icon, Title, Checkmark
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Icon Container
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12),
+                      child: isQuiz 
+                        ? const Icon(Icons.quiz_outlined, size: 28, color: Colors.black87)
+                        : const Icon(Icons.description_outlined, size: 28, color: Colors.black87),
+                    ),
+                    // Title
+                    Expanded(
+                      child: Text(
+                        item['title'],
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                          color: Colors.black87
+                        ),
+                      ),
+                    ),
+                    // Checkmark
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8),
+                      child: Icon(
+                        Icons.check_circle,
+                        color: isCompleted ? const Color(0xFF4CAF50) : Colors.grey[300],
+                        size: 24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              
+              // Divider
+              if (item['description'] != null && item['description'].toString().isNotEmpty)
+                Divider(height: 1, color: Colors.grey[200]),
+
+              // Description Section
+              if (item['description'] != null && item['description'].toString().isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    item['description'] ?? '',
+                    style: const TextStyle(
+                      fontSize: 12, 
+                      color: Colors.black87, 
+                      height: 1.5
+                    ),
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
             ],
           ),
         );

@@ -7,6 +7,8 @@ import 'course_detail_screen.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
+import 'package:learning_management_system/screens/announcements_screen.dart';
+
 class DashboardScreen extends StatefulWidget {
   final String userRole;
   
@@ -55,62 +57,82 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: _selectedIndex == 0 ? AppBar(
         backgroundColor: CeLOETheme.primaryColor,
         elevation: 0,
-        title: GestureDetector(
-          onTap: () async {
-            // Navigate to Profile and wait for result (new image)
-            final result = await Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProfileScreen(currentImage: _profileImage),
+        title: Padding(
+          padding: const EdgeInsets.only(left: 8.0, top: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              Text(
+                'Hallo,',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
-            );
-
-            // If a new image was returned, update state
-            if (result != null && result is XFile) {
-               setState(() {
-                 _profileImage = result;
-               });
-            }
-          },
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 24,
-                backgroundColor: Colors.white24,
-                backgroundImage: _profileImage != null 
-                    ? (kIsWeb 
-                        ? NetworkImage(_profileImage!.path) 
-                        : AssetImage(_profileImage!.path)) as ImageProvider // Placeholder for mobile path
-                    : const AssetImage('assets/images/user_avatar.png'),
-                // Note: NetworkImage(_profileImage!.path) works for blob URLs on web.
-                // On mobile it would need FileImage, but since we are targeting web now...
-              ),
-              const SizedBox(width: 12),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
-                    'Andika Pratama', 
-                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Mahasiswa', 
-                    style: TextStyle(color: Colors.white70, fontSize: 13),
-                  ),
-                ],
+              Text(
+                'ANDIKA PRATAMA',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined, color: Colors.white),
-            onPressed: () {
-               Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const NotificationsScreen()),
-              );
-            },
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0, top: 10, bottom: 10),
+            child: GestureDetector(
+              onTap: () async {
+                 // Navigate to Profile and wait for result (new image)
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileScreen(currentImage: _profileImage),
+                  ),
+                );
+
+                // If a new image was returned, update state
+                if (result != null && result is XFile) {
+                   setState(() {
+                     _profileImage = result;
+                   });
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFB71C1C), // Darker red background for pill
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: Colors.white24),
+                ),
+                child: Row(
+                  children: [
+                    const SizedBox(width: 8),
+                    const Text(
+                      'MAHASISWA',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    CircleAvatar(
+                      radius: 16,
+                       backgroundColor: Colors.white24,
+                       backgroundImage: _profileImage != null 
+                          ? (kIsWeb 
+                              ? NetworkImage(_profileImage!.path) 
+                              : AssetImage(_profileImage!.path)) as ImageProvider 
+                          : const AssetImage('assets/images/user_avatar.png'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ],
       ) : null, // Null AppBar for other tabs to let them define their own
@@ -222,8 +244,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     'Pengumuman Terakhir',
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black87),
                   ),
-                   TextButton(
-                    onPressed: (){}, 
+                  TextButton(
+                    onPressed: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const AnnouncementsScreen()),
+                      );
+                    }, 
                     child: const Text('selengkapnya', 
                       style: TextStyle(color: Colors.blue, fontSize: 12)
                     )
