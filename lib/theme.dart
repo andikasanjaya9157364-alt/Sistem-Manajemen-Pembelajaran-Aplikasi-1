@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CeLOETheme {
-  static const Color primaryColor = Color(0xFF800000); // Maroon
-  static const Color secondaryColor = Color(0xFFE5E5E5);
-  static const Color accentColor = Color(0xFFD32F2F);
+  static const Color primaryColor = Color(0xFF03A9F4); // Ice Blue (Light Blue)
+  static const Color secondaryColor = Color(0xFFE1F5FE); // Very Light Ice Blue
+  static const Color accentColor = Color(0xFF4FC3F7); // Lighter Blue
   static const Color scaffoldBackgroundColor = Colors.white;
 
   static ThemeData get lightTheme {

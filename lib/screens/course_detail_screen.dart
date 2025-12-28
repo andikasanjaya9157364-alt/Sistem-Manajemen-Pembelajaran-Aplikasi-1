@@ -148,9 +148,13 @@ class _CourseDetailScreenState extends State<CourseDetailScreen> with SingleTick
             if (index == 0) { // Pertemuan 1
               description = 'Mata kuliah Desain Antarmuka Pengguna (User Interface Design) memberikan pemahaman serta keterampilan dalam perancangan antarmuka untuk perangkat lunak. Mahasiswa akan mempelajari konsep dasar, prinsip-prinsip desain antarmuka, dan implementasinya dalam pembuatan aplikasi.';
               attachments = [
-                {'icon': Icons.link, 'title': 'Introduction to UI/UX Design (Zoom)'},
-                {'icon': Icons.article_outlined, 'title': 'Silabus Mata Kuliah'},
-                {'icon': Icons.attach_file, 'title': 'Slide Pengantar UI.pdf'},
+                {'icon': Icons.link, 'title': 'Zoom Meeting Syncronous', 'type': 'link', 'completed': true},
+                {'icon': Icons.description_outlined, 'title': 'Pengantar User Interface Design', 'type': 'doc', 'completed': false},
+                {'icon': Icons.description_outlined, 'title': 'Empat Teori Dasar Antarmuka Pengguna', 'type': 'doc', 'completed': false},
+                {'icon': Icons.description_outlined, 'title': 'Empat Teori Dasar Antarmuka Pengguna', 'type': 'doc', 'completed': true},
+                {'icon': Icons.play_circle_outline, 'title': 'User Interface Design for Beginner', 'type': 'video', 'completed': true},
+                {'icon': Icons.link, 'title': '20 Prinsip Desain', 'type': 'link', 'completed': true},
+                {'icon': Icons.link, 'title': 'Best Practice UI Design', 'type': 'link', 'completed': true},
               ];
             } else if (index == 1) { // Pertemuan 2 (Konsep)
                title = 'Konsep User Interface Design';

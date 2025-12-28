@@ -297,7 +297,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: const Icon(Icons.logout, color: Colors.white),
               label: const Text('Log Out', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFB71C1C), // Deep Red
+                backgroundColor: const Color(0xFF03A9F4), // Theme color
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),

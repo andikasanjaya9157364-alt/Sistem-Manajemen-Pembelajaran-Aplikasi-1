@@ -117,7 +117,7 @@ class MyCoursesScreen extends StatelessWidget {
                           child: LinearProgressIndicator(
                             value: course['progress'],
                             backgroundColor: Colors.grey[300],
-                            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFB71C1C)), // Deep Red
+                            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF03A9F4)), // Theme Blue
                             minHeight: 8,
                           ),
                         ),

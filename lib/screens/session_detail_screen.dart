@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:learning_management_system/screens/material_slide_screen.dart';
 
 class SessionDetailScreen extends StatefulWidget {
   final String title;
@@ -114,33 +115,57 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
       itemCount: widget.attachments.length,
       itemBuilder: (context, index) {
         final item = widget.attachments[index];
-        return Container(
-          margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey[200]!),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 4,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Icon(item['icon'], size: 24, color: Colors.grey[700]),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Text(
-                  item['title'],
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+        final bool isCompleted = item['completed'] ?? false;
+
+        return GestureDetector(
+          onTap: () {
+             // Check if it's the specific "Pengantar" material
+             if (item['title'].toString().contains('Pengantar')) {
+               Navigator.push(
+                 context, 
+                 MaterialPageRoute(builder: (context) => const MaterialSlideScreen())
+               );
+             }
+          },
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30), // Pill/Stadium shape
+              border: Border.all(color: Colors.grey[300]!),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
                 ),
-              ),
-              const Icon(Icons.check_circle, color: Colors.green, size: 24),
-            ],
+              ],
+            ),
+            child: Row(
+              children: [
+                Icon(item['icon'], size: 24, color: Colors.black87),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Text(
+                    item['title'],
+                    style: const TextStyle(fontSize: 13, fontWeight: FontWeight.normal, color: Colors.black87),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                if (isCompleted)
+                  Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xFF03A9F4), // Light Blue
+                    ),
+                    child: const Icon(Icons.check, color: Colors.white, size: 14),
+                  )
+                else
+                  const Icon(Icons.check_circle, color: Colors.grey, size: 24), // Grey check for incomplete
+              ],
+            ),
           ),
         );
       },
@@ -211,7 +236,7 @@ class _SessionDetailScreenState extends State<SessionDetailScreen> with SingleTi
                       padding: const EdgeInsets.only(left: 8),
                       child: Icon(
                         Icons.check_circle,
-                        color: isCompleted ? const Color(0xFF4CAF50) : Colors.grey[300],
+                        color: isCompleted ? const Color(0xFF03A9F4) : Colors.grey[300],
                         size: 24,
                       ),
                     ),

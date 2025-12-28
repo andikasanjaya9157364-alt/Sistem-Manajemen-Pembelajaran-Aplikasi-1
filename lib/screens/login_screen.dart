@@ -76,7 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               offset: const Offset(0, 5),
                             ),
                           ],
-                          border: Border.all(color: Colors.red, width: 2), // Red border like reference
+                          border: Border.all(color: CeLOETheme.primaryColor, width: 2), // Theme color border
                         ),
                         padding: const EdgeInsets.all(12),
                         child: Image.asset(
@@ -102,17 +102,17 @@ class _LoginScreenState extends State<LoginScreen> {
                      children: [
                        Row(
                          children: const [
-                           Icon(Icons.login, color: Color(0xFFB71C1C), size: 20),
+                           Icon(Icons.login, color: Color(0xFF03A9F4), size: 20),
                            SizedBox(width: 8),
                            Text('Masuk', style: TextStyle(
                              fontSize: 16, 
                              fontWeight: FontWeight.bold,
-                             color: Color(0xFFB71C1C)
+                             color: Color(0xFF03A9F4)
                            )),
                          ],
                        ),
                        const SizedBox(height: 8),
-                       Container(height: 2, width: 80, color: const Color(0xFFB71C1C))
+                       Container(height: 2, width: 80, color: const Color(0xFF03A9F4))
                      ],
                    ),
                    const SizedBox(width: 40),
@@ -213,7 +213,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextButton(
                       onPressed: (){}, 
                       child: const Text('Lupa Password?',
-                        style: TextStyle(color: Color(0xFFB71C1C), fontWeight: FontWeight.bold)
+                        style: TextStyle(color: Color(0xFF03A9F4), fontWeight: FontWeight.bold)
                       )
                     ),
                   ),
@@ -226,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: ElevatedButton(
                       onPressed: _handleLogin,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFB71C1C),
+                        backgroundColor: const Color(0xFF03A9F4),
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         shape: RoundedRectangleBorder(

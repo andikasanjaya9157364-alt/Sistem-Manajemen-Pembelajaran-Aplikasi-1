@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:learning_management_system/screens/announcements_screen.dart';
+import 'package:learning_management_system/screens/assignment_detail_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   final String userRole;
@@ -104,7 +105,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFB71C1C), // Darker red background for pill
+                  color: const Color(0xFF03A9F4), // Theme Blue
                   borderRadius: BorderRadius.circular(30),
                   border: Border.all(color: Colors.white24),
                 ),
@@ -179,58 +180,66 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.black87),
               ),
               const SizedBox(height: 12),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFB71C1C), // Deep Red
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.white.withValues(alpha: 0.1),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: const [
-                    Text(
-                      'DESAIN ANTARMUKA & PENGALAMAN PENGGUNA',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AssignmentDetailScreen()),
+                  );
+                },
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF03A9F4), // Theme Blue
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.white.withValues(alpha: 0.1),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
                       ),
-                    ),
-                    SizedBox(height: 12),
-                    Text(
-                      'Tugas 11 - UID Android Mobile Game',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w300,
+                    ],
+                  ),
+                  child: Column(
+                    children: const [
+                      Text(
+                        'DESAIN ANTARMUKA & PENGALAMAN PENGGUNA',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 24),
-                    Text(
-                      'Waktu Pengumpulan',
-                      style: TextStyle(
-                         color: Colors.white70,
-                         fontSize: 10,
+                      SizedBox(height: 12),
+                      Text(
+                        'Tugas 11 - UID Android Mobile Game',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w300,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 4),
-                    Text(
-                      'Jumat, 14 Februari, 12:00 AM',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
+                      SizedBox(height: 24),
+                      Text(
+                        'Waktu Pengumpulan',
+                        style: TextStyle(
+                           color: Colors.white70,
+                           fontSize: 10,
+                        ),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 4),
+                      Text(
+                        'Jumat, 14 Februari, 12:00 AM',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               
@@ -257,28 +266,39 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   ),
                  ],
                ),
+              const SizedBox(height: 16),
               Container(
-                height: 120,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Colors.blue[50],
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Container(
-                  decoration: BoxDecoration(
-                     color: Colors.blue[50],
-                     borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Icon(Icons.construction, size: 40, color: Colors.orange),
-                        SizedBox(height: 8),
-                         Text('CeLoe - ICT', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-                         Text('Maintenance LMS', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-                      ],
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.1),
+                      blurRadius: 10,
+                      offset: const Offset(0, 5),
                     ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Image.asset(
+                      'assets/images/announcement_banner.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 4.0),
+                child: Text(
+                  'Maintenance Pra UAS Semester Genap 2020/2021',
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
                   ),
                 ),
               ),
@@ -361,7 +381,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             value: progress,
                             minHeight: 6,
                             backgroundColor: Colors.grey[200],
-                            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFFB71C1C)),
+                            valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF03A9F4)),
                           ),
                         ),
                       ),
@@ -387,19 +407,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     switch (type) {
       case 'ui_ux':
-        decoration = const BoxDecoration(color: Color(0xFFFFD54F)); 
+        decoration = const BoxDecoration(color: Color(0xFF4FC3F7)); 
         child = ClipRRect(
           borderRadius: BorderRadius.circular(8),
           child: Image.asset('assets/images/course_uiux.png', fit: BoxFit.cover),
         );
         break;
       case 'pancasila':
-        decoration = const BoxDecoration(color: Color(0xFFD32F2F)); // Red
+        decoration = const BoxDecoration(color: Color(0xFF03A9F4)); // Blue
         child = const Center(child: Icon(Icons.security, color: Colors.amber, size: 30)); // Garuda placeholder
         break;
       case 'system':
         decoration = BoxDecoration(color: Colors.grey[200]);
-        child = const Center(child: Text('System', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)));
+        child = const Center(child: Text('System', style: TextStyle(color: CeLOETheme.primaryColor, fontWeight: FontWeight.bold)));
         break;
       case 'blue_poly':
         decoration = const BoxDecoration(
