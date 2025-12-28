@@ -1,36 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:learning_management_system/theme.dart';
 import 'dashboard_screen.dart';
-import 'register_screen.dart';
+import 'login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+  
   bool _isPasswordVisible = false;
+  bool _isConfirmPasswordVisible = false;
 
-  void _handleLogin() {
-    String role = 'Student';
-    // Simple role logic
-    if (_emailController.text.toLowerCase().contains('dosen')) {
-      role = 'Teacher';
-    }
-
+  void _handleRegister() {
+    // Implement registration logic here
     Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => DashboardScreen(userRole: role)),
+      MaterialPageRoute(builder: (context) => const DashboardScreen(userRole: 'Student')),
     );
   }
 
-  void _navigateToRegister() {
+  void _navigateToLogin() {
     Navigator.of(context).pushReplacement(
       PageRouteBuilder(
-        pageBuilder: (context, animation1, animation2) => const RegisterScreen(),
+        pageBuilder: (context, animation1, animation2) => const LoginScreen(),
         transitionDuration: Duration.zero,
         reverseTransitionDuration: Duration.zero,
       ),
@@ -39,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Header height
+    // Header height matches login screen
     const double headerHeight = 240;
     const double logoSize = 100;
 
@@ -87,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               offset: const Offset(0, 5),
                             ),
                           ],
-                          border: Border.all(color: CeLOETheme.primaryColor, width: 2), // Theme color border
+                          border: Border.all(color: CeLOETheme.primaryColor, width: 2),
                         ),
                         padding: const EdgeInsets.all(12),
                         child: Image.asset(
@@ -109,35 +108,18 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   Column(
-                     children: [
-                       Row(
-                         children: const [
-                           Icon(Icons.login, color: Color(0xFF03A9F4), size: 20),
-                           SizedBox(width: 8),
-                           Text('Masuk', style: TextStyle(
-                             fontSize: 16, 
-                             fontWeight: FontWeight.bold,
-                             color: Color(0xFF03A9F4)
-                           )),
-                         ],
-                       ),
-                       const SizedBox(height: 8),
-                       Container(height: 2, width: 80, color: const Color(0xFF03A9F4))
-                     ],
-                   ),
-                   const SizedBox(width: 40),
+                   // Masuk Tab (Inactive)
                    GestureDetector(
-                     onTap: _navigateToRegister,
+                     onTap: _navigateToLogin,
                      child: Column(
                        children: [
                          Row(
                            children: const [
-                             Icon(Icons.person_add_outlined, color: Colors.grey, size: 20),
+                             Icon(Icons.login, color: Colors.grey, size: 20),
                              SizedBox(width: 8),
-                             Text('Daftar', style: TextStyle(
+                             Text('Masuk', style: TextStyle(
                                fontSize: 16, 
-                               fontWeight: FontWeight.bold, 
+                               fontWeight: FontWeight.bold,
                                color: Colors.grey
                              )),
                            ],
@@ -146,6 +128,25 @@ class _LoginScreenState extends State<LoginScreen> {
                          Container(height: 2, width: 80, color: Colors.transparent)
                        ],
                      ),
+                   ),
+                   const SizedBox(width: 40),
+                   // Daftar Tab (Active)
+                   Column(
+                     children: [
+                       Row(
+                         children: const [
+                           Icon(Icons.person_add_outlined, color: Color(0xFF03A9F4), size: 20),
+                           SizedBox(width: 8),
+                           Text('Daftar', style: TextStyle(
+                             fontSize: 16, 
+                             fontWeight: FontWeight.bold, 
+                             color: Color(0xFF03A9F4)
+                           )),
+                         ],
+                       ),
+                       const SizedBox(height: 8),
+                       Container(height: 2, width: 80, color: const Color(0xFF03A9F4))
+                     ],
                    ),
                 ],
               ),
@@ -159,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    'Login',
+                    'Daftar',
                     style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
@@ -168,8 +169,27 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 30),
 
-                  // Email / NPM Input
-                  const Text('Email / NPM', 
+                  // Nama Lengkap
+                  const Text('Nama Lengkap', 
+                    style: TextStyle(color: Colors.grey, fontSize: 14)
+                  ),
+                  TextFormField(
+                    controller: _nameController,
+                    decoration: const InputDecoration(
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: CeLOETheme.primaryColor),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(vertical: 8),
+                      isDense: true,
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+
+                  // Email
+                  const Text('Email', 
                     style: TextStyle(color: Colors.grey, fontSize: 14)
                   ),
                   TextFormField(
@@ -187,7 +207,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   const SizedBox(height: 24),
 
-                  // Password Input
+                  // Password
                   const Text('Password', 
                      style: TextStyle(color: Colors.grey, fontSize: 14)
                   ),
@@ -220,25 +240,48 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   
-                  const SizedBox(height: 12),
-                  // Lupa Password
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: (){}, 
-                      child: const Text('Lupa Password?',
-                        style: TextStyle(color: Color(0xFF03A9F4), fontWeight: FontWeight.bold)
-                      )
+                  const SizedBox(height: 24),
+
+                  // Ulangi Password
+                  const Text('Ulangi Password', 
+                     style: TextStyle(color: Colors.grey, fontSize: 14)
+                  ),
+                  TextFormField(
+                    controller: _confirmPasswordController,
+                    obscureText: !_isConfirmPasswordVisible,
+                    decoration: InputDecoration(
+                      enabledBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                      ),
+                      focusedBorder: const UnderlineInputBorder(
+                        borderSide: BorderSide(color: CeLOETheme.primaryColor),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 8),
+                      isDense: true,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isConfirmPasswordVisible
+                              ? Icons.visibility_outlined
+                              : Icons.visibility_off_outlined,
+                              color: Colors.black54,
+                              size: 20,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
+                          });
+                        },
+                      ),
                     ),
                   ),
-                  
-                  const SizedBox(height: 30),
 
-                  // Login Button
+                  const SizedBox(height: 40),
+
+                  // Register Button
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: _handleLogin,
+                      onPressed: _handleRegister,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF03A9F4),
                         foregroundColor: Colors.white,
@@ -248,7 +291,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         elevation: 3,
                       ),
-                      child: const Text('Masuk', 
+                      child: const Text('Daftar', 
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
                       ),
                     ),
@@ -275,25 +318,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-}
-
-// Convex Curve (Curves Downward) matches the "Kampus Lima Menara" screenshot
-class ConvexHeaderClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height - 40);
-    path.quadraticBezierTo(
-      size.width / 2, 
-      size.height + 40, // Control point below the edge
-      size.width, 
-      size.height - 40
-    );
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
